@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  twt.api:
+    image: ${DOCKER_REGISTRY-}twtapi
+    build:
+      context: .
+      dockerfile: src/TWT.API/Dockerfile
