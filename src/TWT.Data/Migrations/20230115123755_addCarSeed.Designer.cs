@@ -11,8 +11,8 @@ using TWT.Data;
 namespace TWT.Data.Migrations
 {
     [DbContext(typeof(CarStoreDbContext))]
-    [Migration("20230115115900_Initial")]
-    partial class Initial
+    [Migration("20230115123755_addCarSeed")]
+    partial class addCarSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,39 @@ namespace TWT.Data.Migrations
 
                     b.HasKey("LincensePlate");
 
-                    b.ToTable("Car");
+                    b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            LincensePlate = "ABC-123",
+                            OwnerName = "Erős Pista",
+                            Power = 100
+                        },
+                        new
+                        {
+                            LincensePlate = "KIS-111",
+                            OwnerName = "Kis Jani",
+                            Power = 60
+                        },
+                        new
+                        {
+                            LincensePlate = "BIG-999",
+                            OwnerName = "Nagy Karcsi",
+                            Power = 300
+                        },
+                        new
+                        {
+                            LincensePlate = "BZS-150",
+                            OwnerName = "Bali Zsolt",
+                            Power = 155
+                        },
+                        new
+                        {
+                            LincensePlate = "BZS-300",
+                            OwnerName = "Bali Zsolt",
+                            Power = 300
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,7 @@ namespace TWT.API
             var builder = WebApplication.CreateBuilder(args);
 
             var connectionString = builder.Configuration.GetConnectionString("CarStore");
+            Console.WriteLine(connectionString);
             builder.Services.AddDbContext<CarStoreDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
