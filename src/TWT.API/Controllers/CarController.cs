@@ -17,23 +17,30 @@ namespace TWT.API.Controllers
             this.carManager = carManager;
         }
 
-        // GET: api/Car
+        // GET: api/Car?LicensePlate=ABC-123
         [HttpGet]
         public async Task<ResponseM> GetCarByLicensePlate([FromQuery(Name = "LicensePlate")] string licensePlate)
         {
             return await carManager.GetCarByLicensePlate(licensePlate);
         }
 
-        // GET api/Car/5
-        [HttpGet("{id}")]
-        public Car Get(int id)
+        // GET api/Car/Owner?Name=Bali Zsolt
+        [HttpGet("Owner")]
+        public async Task<ResponseM> GetCarsByOwners([FromQuery(Name = "Name")] string Name)
         {
-            return null;
+            return await carManager.GetCarsByOwners(Name);
+        }
+
+        // GET api/Car/HorsePower/300
+        [HttpGet("HorsePower/{horsePower}")]
+        public async Task<ResponseM> GetCarsByHorsePower(int horsePower)
+        {
+            return await carManager.GetCarsByHorsePower(horsePower);
         }
 
         // POST api/Car
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Car car)
         {
         }
 
