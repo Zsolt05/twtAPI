@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.EntityFrameworkCore;
 using TWT.Core.Repositories;
 using TWT.Core.Repositories.Interfaces;
@@ -23,6 +25,7 @@ namespace TWT.API
             builder.Services.AddScoped<ICarManagerRepository, CarManagerRepository>();
 
             builder.Services.AddControllers();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -36,7 +39,6 @@ namespace TWT.API
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
