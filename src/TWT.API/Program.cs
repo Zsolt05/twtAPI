@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TWT.Data;
+
 namespace TWT.API
 {
     public class Program
@@ -6,7 +9,13 @@ namespace TWT.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("CarStore");
+            builder.Services.AddDbContext<CarStoreDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            //builder.Services.BuildServiceProvider().GetService<CarStoreDbContext>().Database.Migrate();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
