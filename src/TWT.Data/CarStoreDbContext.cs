@@ -15,6 +15,6 @@ namespace TWT.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new CarSeed());
         }
-        DbSet<Car> Cars { get; set; }
+        public DbSet<Car> Cars { get; set; }
     }
 }
