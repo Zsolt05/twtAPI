@@ -6,3 +6,7 @@ services:
     build:
       context: .
       dockerfile: src/TWT.API/Dockerfile
+    restart: always
+  db:
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: always

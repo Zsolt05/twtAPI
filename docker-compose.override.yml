@@ -3,6 +3,22 @@ version: '3.4'
 services:
   twt.api:
     environment:
+      - "ConnectionStrings:CarStore=Server=db;Database=CarStore;User Id = SA; Password=P@ssword1;encrypt=false" 
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    environment:
+      - SA_PASSWORD=P@ssword1
+      - ACCEPT_EULA=Y
+    ports:
+      - "5555:1433"
+    healthcheck:
+        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P P@ssword1 -Q 'SELECT 1' || exit 1"]
+        interval: 10s
+        retries: 10
+        start_period: 10s
+        timeout: 3s

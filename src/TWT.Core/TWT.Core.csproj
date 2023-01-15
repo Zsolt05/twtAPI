@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TWT.Data\TWT.Data.csproj" />
+  </ItemGroup>
+
 </Project>

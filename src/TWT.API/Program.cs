@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TWT.Data;
 
 namespace TWT.API
 {
@@ -7,10 +9,16 @@ namespace TWT.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("CarStore");
+            Console.WriteLine(connectionString);
+            builder.Services.AddDbContext<CarStoreDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            builder.Services.BuildServiceProvider().GetService<CarStoreDbContext>().Database.Migrate();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
