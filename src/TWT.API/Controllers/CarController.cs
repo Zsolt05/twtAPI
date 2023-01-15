@@ -26,11 +26,11 @@ namespace TWT.API.Controllers
             return await carManager.GetAllCar();
         }
 
-        // GET: api/Car/LicensePlate?Name=ABC-123
-        [HttpGet("LicensePlate")]
-        public async Task<ResponseM> GetCarByLicensePlate([FromQuery(Name = "Text")] string Text)
+        // GET: api/Car/ABC-123
+        [HttpGet("LicensePlate/{licensePlate}")]
+        public async Task<ResponseM> GetCarByLicensePlate(string licensePlate)
         {
-            return await carManager.GetCarByLicensePlate(Text);
+            return await carManager.GetCarByLicensePlate(licensePlate);
         }
 
         // GET api/Car/Owner?Name=Bali Zsolt
@@ -55,10 +55,45 @@ namespace TWT.API.Controllers
             return await carManager.AddCar(car);
         }
 
-        // PUT api/Car/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/Car/LicensePlate/ABC-123?Owner=Bali Zsolt&HorsePower=300
+        [AuthorizeByKey]
+        [HttpPut("LicensePlate/{lincensePlate}")]
+        public async Task<ResponseM> UpdateCarOwner(string lincensePlate, [FromQuery(Name = "Owner")] string? owner, [FromQuery(Name = "HorsePower")] int? horsePower)
         {
+            if (string.IsNullOrWhiteSpace(owner) && !horsePower.HasValue)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    Data = null,
+                    HttpCode = 400,
+                    Message = "Specify what you want to modify"
+                };
+            }
+
+            if (owner != null)
+            {
+                var a = await carManager.UpdateCarOwner(lincensePlate, owner);
+                if (!a.Success)
+                {
+                    return a;
+                }
+            }
+            if (horsePower != null)
+            {
+                var a = await carManager.UpdateCarHorsePower(lincensePlate, (int)horsePower);
+                if (!a.Success)
+                {
+                    return a;
+                }
+            }
+            return new ResponseM
+            {
+                Success = true,
+                HttpCode = 200,
+                Message = "Car Updated",
+                Data = null
+            };
         }
 
         // DELETE api/Car/ABC-123

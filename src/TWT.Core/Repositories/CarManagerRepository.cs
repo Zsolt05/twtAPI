@@ -216,14 +216,110 @@ namespace TWT.Core.Repositories
             }
         }
 
-        public Task<ResponseM> UpdateCarHorsePower(string lincensePlate, int newHorsePower)
+        public async Task<ResponseM> UpdateCarHorsePower(string lincensePlate, int newHorsePower)
         {
-            throw new NotImplementedException();
+            var checkLP = CorrectLicensePlateFormat(lincensePlate);
+            if (checkLP != null)
+            {
+                return checkLP;
+            }
+
+            var checkHP = CorrectHorsePower(newHorsePower);
+            if (checkHP != null)
+            {
+                return checkHP;
+            }
+
+            Car? car = await GetCar(lincensePlate);
+            if (car == null)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    HttpCode = 404,
+                    Message = "Car Not Found",
+                    Data = null
+                };
+            }
+            else
+            {
+                try
+                {
+                    car.Power = newHorsePower;
+                    context.Update(car);
+                    await context.SaveChangesAsync();
+                    return new ResponseM
+                    {
+                        Success = true,
+                        HttpCode = 200,
+                        Message = "Car Horse Power Updated",
+                        Data = null
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseM
+                    {
+                        Success = false,
+                        HttpCode = 500,
+                        Message = "Something went wrong",
+                        Data = null
+                    };
+                }
+            }
         }
 
-        public Task<ResponseM> UpdateCarOwner(string lincensePlate, string newOwner)
+        public async Task<ResponseM> UpdateCarOwner(string lincensePlate, string newOwner)
         {
-            throw new NotImplementedException();
+            var checkLP = CorrectLicensePlateFormat(lincensePlate);
+            if (checkLP != null)
+            {
+                return checkLP;
+            }
+
+            var checkO = CorrectNameFormat(newOwner);
+            if (checkO != null)
+            {
+                return checkO;
+            }
+
+            Car? car = await GetCar(lincensePlate);
+            if (car == null)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    HttpCode = 404,
+                    Message = "Car Not Found",
+                    Data = null
+                };
+            }
+            else
+            {
+                try
+                {
+                    car.OwnerName = newOwner;
+                    context.Update(car);
+                    await context.SaveChangesAsync();
+                    return new ResponseM
+                    {
+                        Success = true,
+                        HttpCode = 200,
+                        Message = "Car Owner Updated",
+                        Data = null
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseM
+                    {
+                        Success = false,
+                        HttpCode = 500,
+                        Message = "Something went wrong",
+                        Data = null
+                    };
+                }
+            }
         }
 
         private static ResponseM? CorrectLicensePlateFormat(string lincensePlate)
@@ -251,7 +347,7 @@ namespace TWT.Core.Repositories
                 {
                     Success = false,
                     HttpCode = 400,
-                    Message = "Incorrect name format. Correct: \"Bali Zsolt\"",
+                    Message = "Incorrect name format. Correct: 'Bali Zsolt'",
                     Data = null
                 };
             }
@@ -268,7 +364,7 @@ namespace TWT.Core.Repositories
                 {
                     Success = false,
                     HttpCode = 400,
-                    Message = "Horsepower cannot be less than one",
+                    Message = "Horse Power cannot be less than one",
                     Data = null
                 };
             }
