@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TWT.Core.Filters;
 using TWT.Core.Models;
 using TWT.Core.Repositories.Interfaces;
 using TWT.Data;
@@ -17,6 +19,7 @@ namespace TWT.API.Controllers
             this.carManager = carManager;
         }
 
+        // GET: api/Car/All
         [HttpGet("All")]
         public async Task<List<Car>> GetAllCar()
         {
@@ -45,6 +48,7 @@ namespace TWT.API.Controllers
         }
 
         // POST api/Car
+        [AuthorizeByKey]
         [HttpPost]
         public async Task<ResponseM> AddCar([FromBody] Car car)
         {
