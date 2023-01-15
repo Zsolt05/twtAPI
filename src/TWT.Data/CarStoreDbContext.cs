@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TWT.Data.Models;
 
 namespace TWT.Data
 {
@@ -12,5 +8,6 @@ namespace TWT.Data
         public CarStoreDbContext(DbContextOptions options) : base(options)
         {
         }
+        DbSet<Car> Cars { get; set; }
     }
 }
