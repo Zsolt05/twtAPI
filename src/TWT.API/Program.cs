@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using TWT.Core.Repositories;
+using TWT.Core.Repositories.Interfaces;
 using TWT.Data;
 
 namespace TWT.API
@@ -17,6 +19,8 @@ namespace TWT.API
             });
 
             builder.Services.BuildServiceProvider().GetService<CarStoreDbContext>().Database.Migrate();
+
+            builder.Services.AddScoped<ICarManagerRepository, CarManagerRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
