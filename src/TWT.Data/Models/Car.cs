@@ -13,7 +13,7 @@ namespace TWT.Data.Models
         public string LincensePlate { get; set; }
 
         [Column("OwnerName")]
-        [RegularExpression("^[a-z]{3,20} [a-z]{3,20}$")]
+        [RegularExpression("^[a-z A-Z]{3,20} [a-z A-Z]{3,20}$")]
         public string OwnerName { get; set; }
 
         [Column("Power")]
