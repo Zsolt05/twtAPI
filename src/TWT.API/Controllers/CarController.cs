@@ -40,8 +40,9 @@ namespace TWT.API.Controllers
 
         // POST api/Car
         [HttpPost]
-        public void Post([FromBody] Car car)
+        public async Task<ResponseM> AddCar([FromBody] Car car)
         {
+            return await carManager.AddCar(car);
         }
 
         // PUT api/Car/5

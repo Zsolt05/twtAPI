@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using TWT.Core.Constans;
 using TWT.Core.Models;
@@ -110,9 +111,59 @@ namespace TWT.Core.Repositories
             }
         }
 
-        public Task<ResponseM> AddCar(Car a)
+        public async Task<ResponseM> AddCar(Car a)
         {
-            throw new NotImplementedException();
+            var checkHP = CorrectHorsePower(a.Power);
+            if (checkHP != null)
+            {
+                return checkHP;
+            }
+
+            var checkO = CorrectNameFormat(a.OwnerName);
+            if (checkO != null)
+            {
+                return checkO;
+            }
+
+            var checkLP = CorrectLicensePlateFormat(a.LincensePlate);
+            if (checkLP != null)
+            {
+                return checkLP;
+            }
+
+            if (await GetCar(a.LincensePlate) != null)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    HttpCode = 400,
+                    Message = "Car Exists",
+                    Data = null
+                };
+            }
+            await context.Cars.AddAsync(a);
+            try
+            {
+                await context.SaveChangesAsync();
+                return new ResponseM
+                {
+                    Success = true,
+                    HttpCode = 200,
+                    Message = "Car Added",
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    HttpCode = 500,
+                    Message = "Something went wrong",
+                    Data = null
+                };
+            }
+
         }
 
         public Task<ResponseM> DeleteCar(string lincensePlate)

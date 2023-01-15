@@ -17,8 +17,6 @@ namespace TWT.Data.Models
         public string OwnerName { get; set; }
 
         [Column("Power")]
-        [MinLength(0)]
-        [Description("Horse Power")]
         public int Power { get; set; }
     }
 }
