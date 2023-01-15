@@ -15,7 +15,7 @@ namespace TWT.API
                 options.UseSqlServer(connectionString);
             });
 
-            //builder.Services.BuildServiceProvider().GetService<CarStoreDbContext>().Database.Migrate();
+            builder.Services.BuildServiceProvider().GetService<CarStoreDbContext>().Database.Migrate();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
