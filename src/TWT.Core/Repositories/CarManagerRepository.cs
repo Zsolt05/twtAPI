@@ -232,5 +232,10 @@ namespace TWT.Core.Repositories
                 return null;
             }
         }
+
+        public async Task<List<Car>> GetAllCar()
+        {//Next time Paging ;)
+            return await context.Cars.ToListAsync();
+        }
     }
 }

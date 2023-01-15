@@ -17,6 +17,12 @@ namespace TWT.API.Controllers
             this.carManager = carManager;
         }
 
+        [HttpGet("All")]
+        public async Task<List<Car>> GetAllCar()
+        {
+            return await carManager.GetAllCar();
+        }
+
         // GET: api/Car?LicensePlate=ABC-123
         [HttpGet]
         public async Task<ResponseM> GetCarByLicensePlate([FromQuery(Name = "LicensePlate")] string licensePlate)

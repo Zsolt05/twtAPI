@@ -13,5 +13,6 @@ namespace TWT.Core.Repositories.Interfaces
         Task<ResponseM> GetCarsByOwners(string ownerName);
         Task<ResponseM> GetCarsByHorsePower(int hoursePower);
         Task<Car?> GetCar(string lincensePlate);
+        Task<List<Car>> GetAllCar();
     }
 }
