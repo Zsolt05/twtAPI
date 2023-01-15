@@ -111,6 +111,11 @@ namespace TWT.Core.Repositories
             }
         }
 
+        public async Task<List<Car>> GetAllCar()
+        {//Next time Paging ;)
+            return await context.Cars.ToListAsync();
+        }
+
         public async Task<ResponseM> AddCar(Car a)
         {
             var checkHP = CorrectHorsePower(a.Power);
@@ -166,9 +171,49 @@ namespace TWT.Core.Repositories
 
         }
 
-        public Task<ResponseM> DeleteCar(string lincensePlate)
+        public async Task<ResponseM> DeleteCar(string lincensePlate)
         {
-            throw new NotImplementedException();
+            var checkLP = CorrectLicensePlateFormat(lincensePlate);
+            if (checkLP != null)
+            {
+                return checkLP;
+            }
+            Car? car = await GetCar(lincensePlate);
+            if (car == null)
+            {
+                return new ResponseM
+                {
+                    Success = false,
+                    HttpCode = 404,
+                    Message = "Car Not Found",
+                    Data = null
+                };
+            }
+            else
+            {
+                try
+                {
+                    context.Remove(car);
+                    await context.SaveChangesAsync();
+                    return new ResponseM
+                    {
+                        Success = true,
+                        HttpCode = 200,
+                        Message = "Car Deleted",
+                        Data = null
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseM
+                    {
+                        Success = false,
+                        HttpCode = 500,
+                        Message = "Something went wrong",
+                        Data = null
+                    };
+                }
+            }
         }
 
         public Task<ResponseM> UpdateCarHorsePower(string lincensePlate, int newHorsePower)
@@ -231,11 +276,6 @@ namespace TWT.Core.Repositories
             {
                 return null;
             }
-        }
-
-        public async Task<List<Car>> GetAllCar()
-        {//Next time Paging ;)
-            return await context.Cars.ToListAsync();
         }
     }
 }

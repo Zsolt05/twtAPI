@@ -26,11 +26,11 @@ namespace TWT.API.Controllers
             return await carManager.GetAllCar();
         }
 
-        // GET: api/Car?LicensePlate=ABC-123
-        [HttpGet]
-        public async Task<ResponseM> GetCarByLicensePlate([FromQuery(Name = "LicensePlate")] string licensePlate)
+        // GET: api/Car/LicensePlate?Name=ABC-123
+        [HttpGet("LicensePlate")]
+        public async Task<ResponseM> GetCarByLicensePlate([FromQuery(Name = "Text")] string Text)
         {
-            return await carManager.GetCarByLicensePlate(licensePlate);
+            return await carManager.GetCarByLicensePlate(Text);
         }
 
         // GET api/Car/Owner?Name=Bali Zsolt
@@ -61,10 +61,11 @@ namespace TWT.API.Controllers
         {
         }
 
-        // DELETE api/Car/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/Car/ABC-123
+        [HttpDelete("{licensePlate}")]
+        public async Task<ResponseM> DeleteCar(string licensePlate)
         {
+            return await carManager.DeleteCar(licensePlate);
         }
     }
 }
