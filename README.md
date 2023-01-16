@@ -14,6 +14,9 @@ docker-compose up -d
 2. ```cd twtAPI\src\TWT.API```
 3. ```dotnet run ```
 
+## Documentation
+I've created a swagger page for the api documentation within the project which can only be accessed in "development" mode at {applicationUrl}/swagger/index.html
+
 ## Task
 
 Plan and implement a simple server application (API), that stores and handles cars.
