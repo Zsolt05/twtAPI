@@ -4,9 +4,15 @@
 ![GIT](https://img.shields.io/badge/-GIT-orange)
 ## Installation
 
+Docker:
 ```sh
 docker-compose up -d
 ```
+
+.Net:
+1. Download SQL Server
+2. ```cd twtAPI\src\TWT.API```
+3. ```dotnet run ```
 
 ## Task
 
