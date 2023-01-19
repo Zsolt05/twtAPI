@@ -12,9 +12,10 @@ If you start the program without Docker, use "cd twtAPI\src\TWT.API" to open "ap
 ```
 
 Docker:
-```yml
-docker-compose -f docker-compose.override.yml -f docker-compose.yml up -d
-```
+1. If you don't have Docker Desktop you need to download
+2. Run Docker Desktop
+3. ```docker-compose -f docker-compose.override.yml -f docker-compose.yml up -d```
+
 You can watch the whole Documentation here: http://localhost:5000/swagger/index.html
 
 .Net:
