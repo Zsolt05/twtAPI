@@ -6,7 +6,7 @@ services:
       - "ConnectionStrings:CarStore=Server=db;Database=CarStore;User Id = SA; Password=P@ssword1;encrypt=false" 
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5000:80"
     depends_on:
       db:
         condition: service_healthy

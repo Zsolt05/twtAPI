@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.EntityFrameworkCore;
 using TWT.Core.Repositories;
 using TWT.Core.Repositories.Interfaces;
 using TWT.Data;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
 
 namespace TWT.API

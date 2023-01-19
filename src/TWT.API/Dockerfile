@@ -6,10 +6,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["TWT.API/TWT.API.csproj", "TWT.API/"]
-RUN dotnet restore "TWT.API/TWT.API.csproj"
+COPY ["src/TWT.API/TWT.API.csproj", "src/TWT.API/"]
+COPY ["src/TWT.Core/TWT.Core.csproj", "src/TWT.Core/"]
+COPY ["src/TWT.Data/TWT.Data.csproj", "src/TWT.Data/"]
+RUN dotnet restore "src/TWT.API/TWT.API.csproj"
 COPY . .
-WORKDIR "/src/TWT.API"
+WORKDIR "/src/src/TWT.API"
 RUN dotnet build "TWT.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
